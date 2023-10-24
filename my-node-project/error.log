@@ -1,0 +1,8 @@
+{"level":"error","message":"This is an error message.","timestamp":"2023-10-24T05:51:35.362Z"}
+{"level":"error","message":"A high-level error: A low-level error","timestamp":"2023-10-24T05:51:35.363Z"}
+{"level":"error","message":"This is an error message.","timestamp":"2023-10-24T06:03:24.402Z"}
+{"level":"error","message":"A high-level error: A low-level error","timestamp":"2023-10-24T06:03:24.402Z"}
+{"level":"error","message":"This is an error message.","timestamp":"2023-10-24T06:03:26.365Z"}
+{"level":"error","message":"A high-level error: A low-level error","timestamp":"2023-10-24T06:03:26.366Z"}
+{"level":"error","message":"This is an error message.","timestamp":"2023-10-24T06:03:27.176Z"}
+{"level":"error","message":"A high-level error: A low-level error","timestamp":"2023-10-24T06:03:27.177Z"}
