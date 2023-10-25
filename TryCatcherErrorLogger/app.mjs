@@ -1,11 +1,11 @@
-import extendedLogger from './extendedLogger.mjs';
+import Logger from './Logger.mjs';
 import verrorPkg from 'verror';
 const { VError } = verrorPkg;
 
 // Example log messages
-extendedLogger.logInfo('This is an info message.');
-extendedLogger.logWarn('This is a warning message.');
-extendedLogger.logError('This is an error message.');
+Logger.logInfo('This is an info message.');
+Logger.logWarn('This is a warning message.');
+Logger.logError('This is an error message.');
 
 // Example with VError
 try {
@@ -15,8 +15,8 @@ try {
     throw new VError(err, 'A high-level error');
   }
 } catch (err) {
-  extendedLogger.logError(err);  // Correct usage of logError
+  Logger.logError(err);  // Correct usage of logError
 }
 
 // Flush the logs to the logger
-extendedLogger.flushLogs();
+Logger.flushLogs();
