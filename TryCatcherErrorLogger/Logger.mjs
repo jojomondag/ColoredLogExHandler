@@ -1,7 +1,29 @@
-// extendedLogger.mjs
+// Logger.mjs
+import fs from 'fs';
 import winston from 'winston';
 import chalk from 'chalk';
+import { promises as fsPromises } from 'fs';
 
+function createLogger() {
+  const logDirectory = 'logs';
+  
+  // Check if the log directory exists, create it if not
+  if (!fs.existsSync(logDirectory)) {
+    fs.mkdirSync(logDirectory);
+  }
+
+  return winston.createLogger({
+    level: 'info',
+    format: winston.format.combine(
+      winston.format.timestamp(),
+      winston.format.json()  // Log in JSON format
+    ),
+    transports: [
+      new winston.transports.File({ filename: `${logDirectory}/error.json`, level: 'error' }),  // Prepend directory to file paths
+      new winston.transports.File({ filename: `${logDirectory}/combined.json` })  // Prepend directory to file paths
+    ]
+  });
+}
 // Function to colorize the severity level
 function colorizeLevel(level) {
   switch (level) {
@@ -15,28 +37,11 @@ function colorizeLevel(level) {
       return level;
   }
 }
-
 // Custom format function for console output
 const customFormat = winston.format.printf(info => {
   const { timestamp, level, message, errorCode, file, line } = info;
   return `${chalk.blue(timestamp)} ${colorizeLevel(level)}: ${message} ${errorCode ? `(Error Code: ${errorCode})` : ''} ${file ? `at File: ${file} Line: ${line}` : ''}`;
 });
-
-// Function to create the Winston logger
-function createLogger() {
-  return winston.createLogger({
-    level: 'info',
-    format: winston.format.combine(
-      winston.format.timestamp(),
-      winston.format.json()  // Log in JSON format
-    ),
-    transports: [
-      new winston.transports.File({ filename: 'error.json', level: 'error' }),  // Change file extension to .json
-      new winston.transports.File({ filename: 'combined.json' })  // Change file extension to .json
-    ]
-  });
-}
-
 // Function to add a console transport to the logger
 function addConsoleTransport(logger) {
   if (process.env.NODE_ENV !== 'production') {
@@ -49,7 +54,7 @@ function addConsoleTransport(logger) {
     }));
   }
 }
-class ExtendedLogger {
+class Logger {
   constructor() {
     this.infoMessages = [];
     this.warnMessages = [];
@@ -57,7 +62,33 @@ class ExtendedLogger {
     this.logger = createLogger();
     addConsoleTransport(this.logger);
   }
-  logInfo(message, { file, line } = {}) {
+  async prependLogs(level, messages) {
+    if (messages.length > 0) {
+      const logDirectory = 'logs';
+      const filepath = level === 'error' ? `${logDirectory}/error.json` : `${logDirectory}/combined.json`;
+
+      // Read existing log data
+      let existingData = '';
+      try {
+        existingData = await fsPromises.readFile(filepath, 'utf8');
+      } catch (err) {
+        if (err.code !== 'ENOENT') throw err;  // Ignore file not found error
+      }
+
+      // Create new log messages using Winston logger to ensure formatting (including timestamp)
+      const newLogEntries = messages.map(msg => {
+        const info = { level, ...msg };
+        const formatted = this.logger.format.transform(info, this.logger.format.options);
+        return JSON.stringify(formatted);
+      });
+
+      // Prepend new log messages
+      const newData = newLogEntries.join('\n') + '\n' + existingData;
+
+      // Write updated log data back to file
+      await fsPromises.writeFile(filepath, newData);
+    }
+  }  logInfo(message, { file, line } = {}) {
     this.infoMessages.push({ message, file, line });
   }
   logWarn(message, { errorCode, file, line } = {}) {
@@ -80,28 +111,16 @@ class ExtendedLogger {
     }
     return { file: '', line: '' };
   }
-  flushLogs() {
-    this.infoMessages.forEach(msg => {
-      this.logger.info(msg);
-    });
-    this.warnMessages.forEach(msg => {
-      this.logger.warn(msg);
-    });
-    this.errorMessages.forEach(msg => {
-      this.logger.error(msg);
-    });
+  async flushLogs() {
+    await Promise.all([
+      this.prependLogs('info', this.infoMessages),
+      this.prependLogs('warn', this.warnMessages),
+      this.prependLogs('error', this.errorMessages)
+    ]);
     this.infoMessages = [];
     this.warnMessages = [];
     this.errorMessages = [];
   }
-  flushLogType(logType, messages) {
-    if (messages.length > 0) {
-      messages.forEach(msg => {
-        this.logger[logType](msg);
-      });
-      messages.length = 0;  // Clear the messages array
-    }
-  }
 }
 
-export default new ExtendedLogger();
+export default new Logger();
