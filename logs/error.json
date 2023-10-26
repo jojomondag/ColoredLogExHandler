@@ -1,0 +1,3 @@
+2023-10-25T20:26:20.713Z error: This is an Error message. (File: file:///C:/Users/Josef/Documents/GitHub/jojoSupaLoggExceptionColour/TryCatcherErrorLogger/Main.mjs, Line: 6) (File: file:///C:/Users/Josef/Documents/GitHub/jojoSupaLoggExceptionColour/TryCatcherErrorLogger/Main.mjs, Line: 6)
+2023-10-25T20:26:20.714Z error: Oops! Something went wrong: A simulated error. (File: Unknown file, Line: Unknown line) (File: Unknown file, Line: Unknown line)
+2023-10-25T20:26:20.715Z error: Oops! Something went wrong: A high-level error.: A low-level error (File: Unknown file, Line: Unknown line) (File: Unknown file, Line: Unknown line)
