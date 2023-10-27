@@ -3,28 +3,50 @@ import winston from 'winston';
 import chalk from 'chalk';
 import { promises as fsPromises } from 'fs';
 import { parse } from 'stack-trace';
+import { fileURLToPath } from 'url';
+import path from 'path';
 
 function extractFilePath(error) {
-  if (error instanceof Error && error.stack) {
-    const trace = parse(error);
-    const callSite = trace[1];
-    if (callSite) {
-      return {
-        filePath: callSite.getFileName(),
-        lineNumber: callSite.getLineNumber(),
-      };
+    if (error instanceof Error && error.stack) {
+        const trace = parse(error);
+        const callSite = trace[1];
+        if (callSite) {
+            const fullPath = callSite.getFileName();
+            // Replace the 'file://' prefix and convert backslashes to forward slashes for consistency
+            const formattedFullPath = fullPath.replace('file://', '').replace(/\\/g, '/');
+            const projectDirectory = getProjectDirectory().replace(/\\/g, '/') + '/';
+            // Get the relative path by replacing the project directory part in the full path
+            const relativePath = formattedFullPath.replace(projectDirectory, '');
+            return {
+                filePath: relativePath,
+                lineNumber: callSite.getLineNumber(),
+            };
+        }
     }
-  }
-  return { filePath: 'Unknown file', lineNumber: 'Unknown line' };
+    return { filePath: 'Unknown file', lineNumber: 'Unknown line' };
 }
+
+
+function getProjectDirectory() {
+  const currentFileUrl = import.meta.url;
+  const currentFilePath = fileURLToPath(currentFileUrl);
+  const currentDir = path.dirname(currentFilePath);
+  const projectDirectory = path.resolve(currentDir, '../../');
+  return projectDirectory;
+}
+
 
 function generateLogMessage({timestamp, level, message, error}) {
   const { filePath, lineNumber } = error ? extractFilePath(error) : { filePath: 'Unknown file', lineNumber: 'Unknown line' };
-  return `${timestamp} ${level}: ${message} (File: ${filePath}, Line: ${lineNumber})`;
+  // Remove the project name from the file path
+  const formattedFilePath = filePath.replace('jojoSupaLoggExceptionColour/', '');
+  return `${timestamp} ${level}: ${message} (File: ${formattedFilePath}, Line: ${lineNumber})`;
 }
 
 function formatMessage(message, error) {
-  return `${message} (File: ${extractFilePath(error).filePath}, Line: ${extractFilePath(error).lineNumber})`;
+  // Remove the project name from the file path
+  const formattedFilePath = extractFilePath(error).filePath.replace('jojoSupaLoggExceptionColour/', '');
+  return `${message} (File: ${formattedFilePath}, Line: ${extractFilePath(error).lineNumber})`;
 }
 
 function log(type, message, error = null) {
@@ -36,7 +58,7 @@ function log(type, message, error = null) {
 function createMessageObject(formattedMessage, type) {
   return { 
     [type]: formattedMessage, 
-    timestamp: new Date().toISOString() 
+    timestamp: new Date().toISOString().slice(16)  // This slices off the date part, keeping the time and the timezone offset.
   };
 }
 
@@ -106,14 +128,23 @@ class MessageHelper {
     const logFilePath = `${this.logDirectory}/ExecutionLog.json`;
     const currentDate = new Date();
 
-    const aggregatedMessages = {
-      Summary: {
-        Date: currentDate.toISOString().split('T')[0],
-        Hour: currentDate.toLocaleTimeString()
-      },
-      Errors: this.messages.filter(msg => msg.error),
-      Successful: this.messages.filter(msg => msg.success)
-    };
+    const projectDirectory = getProjectDirectory();
+
+    // Mapping through the errors and modifying the timestamp property to trim the date part
+    const errorsWithTrimmedTimestamps = this.messages.filter(msg => msg.error)
+      .map(msg => {
+        const trimmedTimestamp = msg.timestamp.slice(8);  // This slices off the date part, keeping the time and the timezone offset.
+        return { ...msg, timestamp: trimmedTimestamp };
+      });
+
+      const aggregatedMessages = {
+        Summary: {
+            Hour_Minutes: currentDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }),  // This will output the time in HH:mm format
+            File: `file://${projectDirectory.replace(/\\/g, '/')}/jojoSupaLoggExceptionColour/`,  // Convert Windows-style paths to URL format
+        },
+        Errors: this.messages.filter(msg => msg.error),
+        Successful: this.messages.filter(msg => msg.success)
+      };
 
     const json = JSON.stringify(aggregatedMessages, null, 2);
 
@@ -122,7 +153,7 @@ class MessageHelper {
     } catch (err) {
       this.logger.error(`Failed to write to ${logFilePath}: ${err.message}`, { error: err });
     }
-  }
+}
 
   async flushLogs() {
     await this.saveMessagesToJsonFile();
