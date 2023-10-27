@@ -1,15 +1,17 @@
 import Logger from '../Helpers/MessageHelper.mjs';
-import { tryCatchAsync } from '../Helpers/ExceptionHelper.mjs';
-import VError from 'verror';
+import { execute as tryCatchAsync } from '../Helpers/ExceptionHelper.mjs';
+import { createAndThrowVError } from '../Helpers/ErrorHandlingHelper.mjs';
 
 generateErrorsAndWarnings();
 
 async function generateLowLevelError() {
   throw new Error('A low-level error');
 }
+
 async function generateSimulatedError() {
   throw new Error('A simulated error.');
 }
+
 async function generateErrorsAndWarnings() {
   // Log messages
   Logger.logSuccess('This is an info message.', new Error());
@@ -21,13 +23,7 @@ async function generateErrorsAndWarnings() {
     try {
       await generateSimulatedError();
     } catch (err) {
-      throw new VError({
-        name: 'SimulatedError',
-        cause: err,
-        info: {
-          message: 'A simulated error.'
-        }
-      });
+      await createAndThrowVError(err);  // Updated to use the new function
     }
   });
 
@@ -35,13 +31,7 @@ async function generateErrorsAndWarnings() {
     try {
       await generateLowLevelError();
     } catch (err) {
-      throw new VError({
-        name: 'HighLevelError',
-        cause: err,
-        info: {
-          message: 'A high-level error.'
-        }
-      });
+      await createAndThrowVError(err);  // Updated to use the new function
     }
   });
 
