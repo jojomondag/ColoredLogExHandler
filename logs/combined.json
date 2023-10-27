@@ -1,5 +1,0 @@
-8:40:13 AM info: This is an info message. (File: /TryCatcherErrorLogger/Main.mjs, Line: 6) (File: /TryCatcherErrorLogger/Main.mjs, Line: 6)
-8:40:13 AM warn: This is a warning message. (File: /TryCatcherErrorLogger/Main.mjs, Line: 6) (File: /TryCatcherErrorLogger/Main.mjs, Line: 6)
-8:40:13 AM error: This is an Error message. (File: /TryCatcherErrorLogger/Main.mjs, Line: 6) (File: /TryCatcherErrorLogger/Main.mjs, Line: 6)
-8:40:13 AM error: Oops! Something went wrong: A simulated error. (File: Unknown file, Line: Unknown line) (File: Unknown file, Line: Unknown line)
-8:40:13 AM error: Oops! Something went wrong: A high-level error.: A low-level error (File: Unknown file, Line: Unknown line) (File: Unknown file, Line: Unknown line)

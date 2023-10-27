@@ -4,7 +4,11 @@ export async function tryCatchAsync(action, errorHandler = null) {
     try {
         await action();
     } catch (ex) {
-        Logger.logError(`Oops! Something went wrong: ${ex.message}`);
+        if (ex) {
+            Logger.logError(`Oops! Something went wrong: ${ex.message}`, ex);
+        } else {
+            Logger.logError('Oops! An unknown error occurred.');
+        }
         if (errorHandler) {
             await errorHandler(ex);
         }
@@ -22,7 +26,7 @@ export async function tryCatchAsyncWithResult(action, errorHandler = null) {
     }
 }
 export async function handleExceptionAsync(ex, errorMessage = null) {
-    Logger.logError(errorMessage || `Oops! Something went wrong: ${ex.message}`);
+    Logger.logError(`Oops! Something went wrong: ${ex.message}`, ex);
 }
 export async function tryCatchAsyncCustom(action, catchBlock) {
     try {
