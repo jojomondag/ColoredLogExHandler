@@ -55,7 +55,7 @@ Logging preferences can be tailored in the `src/config/config.mjs` file. Set `LO
 ColoredLogExHandler leans on the following dependencies:
 - chalk
 - stack-trace
-- verror
+- VError
 - winston
 
 Ensure to install these dependencies using `npm install` before leveraging the library.
