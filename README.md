@@ -25,8 +25,6 @@ cd ColoredLogExHandler
 npm install
 ```
 
-Certainly! Based on the provided script, it seems like the library offers an interactive menu to test its functionality. Here's how you can update the Usage section to reflect this:
-
 ## Usage
 ColoredLogExHandler provides an interactive menu to test its logging and exception handling features. Follow the steps below to explore the library's capabilities:
 
