@@ -33,14 +33,13 @@ ColoredLogExHandler provides an interactive menu to test its logging and excepti
 npm start
 ```
 
-If you open the Project in you favourite in a **IDE**: Just press **Run**
+**Or**
+
+Open Project in your favourite in a **IDE**: Just press **Run**
 
 2. You will be presented with a menu with options:
 
 3. Enter the number corresponding to your choice and press Enter.
-
-For instance, entering `1` will run the Coin Flip Example, which demonstrates the logging of successful events. Entering `2` will run the Error Generation Example, showcasing how the library handles and logs exceptions. To exit the menu, enter `0`.
-
 
 By following the on-screen prompts, you can explore the different logging and exception handling scenarios implemented in the library.
 
