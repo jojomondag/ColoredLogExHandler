@@ -1,11 +1,9 @@
 import chalk from 'chalk';
 import { parse } from 'stack-trace';
-import path from 'path';
 
 export function formatFilePath(filePath, projectName) {
   return filePath.replace(`${projectName}/`, '');
 }
-
 export function extractFilePath(error) {
   if (error instanceof Error && error.stack) {
     const trace = parse(error);
@@ -21,7 +19,6 @@ export function extractFilePath(error) {
   }
   return { filePath: 'Unknown file', lineNumber: 'Unknown line' };
 }
-
 export function generateLogMessage({ timestamp, level, message, error }, messageHelper, projectDirectory) {
   const { filePath, lineNumber } = error ? extractFilePath(error) : { filePath: 'Unknown file', lineNumber: 'Unknown line' };
   
@@ -41,7 +38,6 @@ export function generateLogMessage({ timestamp, level, message, error }, message
   // Remove the timestamp from the message
   return `${level}: ${message} (File: ${relativePath}, Line: ${lineNumber})`;
 }
-
 export function colorizeLevel(level) {
   switch (level) {
     case 'info': return chalk.green(level);

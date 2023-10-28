@@ -1,0 +1,29 @@
+{
+  "Summary": {
+    "Hour_Minutes": "Sat Oct 28 2023 19:23:15 GMT+0200 (centraleuropeisk sommartid)",
+    "File": "file://C:/Users/Josef/Documents/GitHub/ColoredLogExHandler/src/"
+  },
+  "Errors": [
+    {
+      "error": "error: Oops! Something went wrong: getErrorName is not defined (File: examples/exampleProjCoinFlipper.mjs, Line: 11)",
+      "timestamp": ":15.072Z"
+    },
+    {
+      "error": "error: Oops! Something went wrong: getErrorName is not defined (File: examples/exampleProjCoinFlipper.mjs, Line: 11)",
+      "timestamp": ":15.079Z"
+    },
+    {
+      "error": "error: Oops! Something went wrong: getErrorName is not defined (File: examples/exampleProjCoinFlipper.mjs, Line: 11)",
+      "timestamp": ":15.083Z"
+    },
+    {
+      "error": "error: Oops! Something went wrong: getErrorName is not defined (File: examples/exampleProjCoinFlipper.mjs, Line: 11)",
+      "timestamp": ":15.090Z"
+    },
+    {
+      "error": "error: Oops! Something went wrong: getErrorName is not defined (File: examples/exampleProjCoinFlipper.mjs, Line: 11)",
+      "timestamp": ":15.090Z"
+    }
+  ],
+  "Successful": []
+}

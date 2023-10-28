@@ -8,16 +8,12 @@ async function simulateSuccessScenario() {
 
 async function simulateWarningScenario() {
     // Simulate a warning scenario
-    Logger.logWarn('A potential issue has been detected.', new Error('Warning detected'));
+    Logger.logWarn('A potential issue has been detected.', createAndThrowVError(new Error('Warning detected')));
 }
 
 async function simulateErrorScenario() {
     // Simulate an error scenario
-    try {
-        throw new Error('An error occurred.');
-    } catch (err) {
-        createAndThrowVError(err);
-    }
+    createAndThrowVError(new Error('An error occurred.'));
 }
 
 // Execution
@@ -26,7 +22,7 @@ async function simulateErrorScenario() {
     await tryCatchAsync(simulateSuccessScenario);
     await tryCatchAsync(simulateWarningScenario);
     await tryCatchAsync(simulateErrorScenario);
-
+    await execute(simulateErrorScenario);  // Assuming execute is imported or defined elsewhere
     // Flush the logs
     await Logger.flushLogs();
 })();

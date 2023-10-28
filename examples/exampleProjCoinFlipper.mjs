@@ -2,17 +2,13 @@ import { Logger, tryCatchAsync, createAndThrowVError } from '../src/helpers/inde
 
 // Function to simulate a coin flip
 async function flipCoin() {
-    try {
-        const randomValue = Math.random();
-        if (randomValue < 0.5) {
-            Logger.logSuccess('Heads!');
-        } else if (randomValue < 0.98) {
-            Logger.logSuccess('Tails!');
-        } else {
-            throw new Error('Coin landed on its edge.');
-        }
-    } catch (error) {
-        createAndThrowVError(error);
+    const randomValue = Math.random();
+    if (randomValue < 0.5) {
+        Logger.logSuccess('Heads!');
+    } else if (randomValue < 0.98) {
+        Logger.logSuccess('Tails!');
+    } else {
+        createAndThrowVError(new Error('Coin landed on its edge.'));
     }
 }
 

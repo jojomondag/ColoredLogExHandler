@@ -40,9 +40,7 @@ function handleMenuSelection(choice) {
     }
 }
 
-// Exporting the function for external use, if needed
 export async function generateErrorsAndWarnings() {
-    // ... your previous code for the error generation example
 }
 
 // Display menu on startup

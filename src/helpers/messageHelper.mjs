@@ -70,8 +70,7 @@ class MessageHelper {
     });
   }
 
-// Inside MessageHelper class
-async saveMessagesToJsonFile() {
+  async saveMessagesToJsonFile() {
   const logFilePath = `${this.logDirectory}/ExecutionLog.json`;
 
   // Get the current date and format it as desired
@@ -97,8 +96,7 @@ async saveMessagesToJsonFile() {
   } catch (err) {
       this.logError(`Failed to write to ${logFilePath}: ${err.message}`, err);
   }
-}
-
+  }
 
   async flushLogs() {
     await this.saveMessagesToJsonFile();
