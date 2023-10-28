@@ -1,4 +1,4 @@
-import Logger from './MessageHelper.mjs';
+import Logger from '../helpers/messageHelper.mjs';
 
 /**
  * Handles the execution of a function and logs any errors that occur.

@@ -4,8 +4,9 @@ import { promises as fsPromises } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import chalk from 'chalk';
-import {generateLogMessage, colorizeLevel } from './logutil.mjs';
-import { LOGGING_ENABLED } from './config.mjs';
+import { generateLogMessage, colorizeLevel } from './logHelper.mjs';
+import { LOGGING_ENABLED } from '../config/config.mjs';
+
 
 class MessageHelper {
   constructor() {

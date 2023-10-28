@@ -1,4 +1,3 @@
-// logUtil.mjs
 import chalk from 'chalk';
 import { parse } from 'stack-trace';
 
