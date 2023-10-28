@@ -28,7 +28,7 @@ npm install
 ## Usage
 ColoredLogExHandler provides an interactive menu to test its logging and exception handling features. Follow the steps below to explore the library's capabilities:
 
-1. Run the project using the following command:
+**1**. Run the project using the following command:
 ```bash
 npm start
 ```
@@ -37,9 +37,9 @@ npm start
 
 Open Project in your favourite in a **IDE**: Just press **Run**
 
-2. You will be presented with a menu with options:
+**2**. You will be presented with a menu with options:
 
-3. Enter the number corresponding to your choice and press Enter.
+**3**. Enter the number corresponding to your choice and press Enter.
 
 By following the on-screen prompts, you can explore the different logging and exception handling scenarios implemented in the library.
 
