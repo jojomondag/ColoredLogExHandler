@@ -41,7 +41,9 @@ Open Project in your favourite in a **IDE**: Just press **Run**
 
 **3**. Enter the number corresponding to your choice and press Enter.
 
-By following the on-screen prompts, you can explore the different logging and exception handling scenarios implemented in the library.
+<br/>
+
+By following the **Terminal** prompts, you can explore the different logging and exception handling scenarios implemented in the library.
 
 ## Examples
 The `examples` directory within the project houses illustrative examples demonstrating the usage of the library for logging and exception handling.
