@@ -8,3 +8,6 @@ export function createAndThrowVError(err) {
     info: { message: err.message }
   });
 }
+export function getErrorName(err) {
+  return err.message.includes('simulated') ? 'SimulatedError' : 'HighLevelError';
+}
