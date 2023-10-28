@@ -33,7 +33,7 @@ ColoredLogExHandler provides an interactive menu to test its logging and excepti
 npm start
 ```
 
-or if your in a IDE: Just press **Run**
+If you open the Project in you favourite in a **IDE**: Just press **Run**
 
 2. You will be presented with a menu with options:
 
