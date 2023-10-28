@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import { parse } from 'stack-trace';
+import path from 'path';
 
 export function formatFilePath(filePath, projectName) {
   return filePath.replace(`${projectName}/`, '');
@@ -23,10 +24,22 @@ export function extractFilePath(error) {
 
 export function generateLogMessage({ timestamp, level, message, error }, messageHelper, projectDirectory) {
   const { filePath, lineNumber } = error ? extractFilePath(error) : { filePath: 'Unknown file', lineNumber: 'Unknown line' };
-  const formattedFilePath = filePath.replace(projectDirectory, '');
+  
+  // Split the project directory and file path into array of directories
+  const projectDirArr = projectDirectory.replace(/\\/g, '/').split('/');
+  const filePathArr = filePath.replace(/\\/g, '/').split('/');
+  
+  // Find the index where the project directory array ends in the file path array
+  const projectDirLength = projectDirArr.length;
+  
+  // Slice the file path array to get the relative path array
+  const relativePathArr = filePathArr.slice(projectDirLength);
+  
+  // Join the relative path array to get the relative path string
+  const relativePath = relativePathArr.join('/');
   
   // Remove the timestamp from the message
-  return `${level}: ${message} (File: ${formattedFilePath}, Line: ${lineNumber})`;
+  return `${level}: ${message} (File: ${relativePath}, Line: ${lineNumber})`;
 }
 
 export function colorizeLevel(level) {
