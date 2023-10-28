@@ -25,48 +25,32 @@ cd ColoredLogExHandler
 npm install
 ```
 
-### Usage
-Import the necessary helpers from the library and use them in your project.
+Certainly! Based on the provided script, it seems like the library offers an interactive menu to test its functionality. Here's how you can update the Usage section to reflect this:
 
-```javascript
-import { Logger, tryCatchAsync, createAndThrowVError } from './src/helpers/indexBarrel.mjs';
+## Usage
+ColoredLogExHandler provides an interactive menu to test its logging and exception handling features. Follow the steps below to explore the library's capabilities:
 
-// Function to simulate a coin flip
-async function flipCoin() {
-    try {
-        const randomValue = Math.random();
-        if (randomValue < 0.5) {
-            Logger.logSuccess('Heads!');
-        } else if (randomValue < 0.98) {
-            Logger.logSuccess('Tails!');
-        } else {
-            throw new Error('Coin landed on its edge.');
-        }
-    } catch (error) {
-        createAndThrowVError(error);
-    }
-}
-
-// Execute the function
-flipCoin();
-```
-
-## Examples
-The `examples` directory within the project houses illustrative examples demonstrating the usage of the library for logging and exception handling.
-
-- `exampleProjCoinFlipper.mjs` simulates a coin flip and logs the result.
-- `exampleUsage.mjs` demonstrates the application of logging and exception handling features in various scenarios.
-
-To execute the examples, run the following command:
+1. Run the project using the following command:
 ```bash
 npm start
 ```
 
+or if your in a IDE: Just press #Run#
+
+2. You will be presented with a menu with options:
+
+3. Enter the number corresponding to your choice and press Enter.
+
+For instance, entering `1` will run the Coin Flip Example, which demonstrates the logging of successful events. Entering `2` will run the Error Generation Example, showcasing how the library handles and logs exceptions. To exit the menu, enter `0`.
+
+
+By following the on-screen prompts, you can explore the different logging and exception handling scenarios implemented in the library.
+
+## Examples
+The `examples` directory within the project houses illustrative examples demonstrating the usage of the library for logging and exception handling.
+
 ## Configuration
 Logging preferences can be tailored in the `src/config/config.mjs` file. Set `LOGGING_ENABLED` to `true` to activate logging, or `false` to disable it.
-
-## Documentation
-In-depth documentation is embedded within the source code, elucidating the purpose and utilization of each function and class.
 
 ## Dependencies
 ColoredLogExHandler leans on the following dependencies:
